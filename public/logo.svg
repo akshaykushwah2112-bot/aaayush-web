@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">Style Structure Studio</title>
+  <desc id="desc">Style Structure architectural studio logo</desc>
+  <rect width="900" height="900" fill="#f3f3f3"/>
+  <circle cx="450" cy="450" r="410" fill="#fff" stroke="#d0d0d0" stroke-width="2"/>
+  <g fill="none" stroke="#151515" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M260 430V340l75-63 45 38v115"/>
+    <path d="M260 430h120V315l56-45v160"/>
+    <path d="M378 430V210h48v220" fill="#606060"/>
+    <path d="M426 240h95v190"/>
+    <path d="M470 430V290h93v140"/>
+    <path d="M563 430V345l76-59v144"/>
+    <path d="M620 430V260"/>
+    <path d="M245 430h395"/>
+    <path d="M510 385h95"/>
+    <path d="M525 405h75"/>
+    <path d="M290 330l45 38"/>
+  </g>
+  <g fill="#151515" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="450" y="515" font-size="52" font-weight="700" letter-spacing="15">STYLE STRUCTURE</text>
+    <text x="450" y="555" font-size="20" letter-spacing="11">AN ARCHITECTURAL STUDIO</text>
+  </g>
+</svg>

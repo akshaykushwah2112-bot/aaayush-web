@@ -1,0 +1,46 @@
+export const packages = [
+  {
+    id: 'basic',
+    name: 'Basic Package',
+    price: '₹999 per floor',
+    priceNote: 'Total investment: ₹12,999 — inclusive of complete architectural design & drawing cost',
+    includes: [
+      'Basic Floor Planning',
+      'Space Layout Consultation',
+      '1 Design Revision',
+    ],
+    audience: 'Clients who need a solid foundational layout',
+  },
+  {
+    id: 'standard',
+    name: 'Standard Package',
+    price: '₹19,999',
+    priceNote: 'Our most popular package',
+    includes: [
+      'Complete Working Drawing',
+      'Detailed Floor Plan',
+      'Furniture Layout Planning',
+      '3D Elevation Design',
+      '2D Working Drawing',
+      '3 On-Site Visits',
+    ],
+    audience: 'Clients who want a complete design-to-execution package',
+  },
+  {
+    id: 'premium',
+    name: 'Premium Package',
+    price: '₹29,999',
+    priceNote: 'Complete end-to-end design solution',
+    includes: [
+      'Everything in Standard, plus:',
+      'Electrical Layout & Numbering',
+      'Staircase Detailing',
+      'Structural Detailing',
+      'Door & Window Detailing',
+      'Multiple Perspective Views',
+      'Dedicated Design Coordination Meetings',
+      'Final Approved Working Drawing',
+    ],
+    audience: '',
+  },
+]

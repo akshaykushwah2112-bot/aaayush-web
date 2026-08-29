@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ContactMethod {
+  WHATSAPP
+  PHONE
+  EMAIL
+}
+
+enum ProjectType {
+  ARCHITECTURE
+  INTERIOR
+  COMMERCIAL
+  RESIDENTIAL
+  RENOVATION
+  LANDSCAPE
+  OTHER
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  name         String   @db.VarChar(120)
+  email        String   @unique @db.VarChar(255)
+  passwordHash String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([email])
+}
+
+model Enquiry {
+  id                    String          @id @default(cuid())
+  name                  String          @db.VarChar(120)
+  phone                 String          @db.VarChar(20)
+  email                 String?         @db.VarChar(255)
+  projectType           ProjectType     @default(OTHER)
+  message               String          @db.Text
+  preferredContactMethod ContactMethod?  @default(WHATSAPP)
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([createdAt])
+  @@index([phone])
+  @@index([projectType])
+  @@index([preferredContactMethod])
+}
+
+model Appointment {
+  id             String             @id @default(cuid())
+  name           String             @db.VarChar(120)
+  phone          String             @db.VarChar(20)
+  email          String?            @db.VarChar(255)
+  preferredDate  DateTime           @db.Date
+  preferredTime  String             @db.VarChar(20)
+  projectType    ProjectType        @default(OTHER)
+  message        String?            @db.Text
+  status         AppointmentStatus  @default(PENDING)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@index([preferredDate])
+  @@index([status])
+  @@index([phone])
+  @@index([createdAt])
+}
