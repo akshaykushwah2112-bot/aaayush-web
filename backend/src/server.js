@@ -49,6 +49,11 @@ const isLikelySpam = (value) => {
   return spamPatterns.some((pattern) => pattern.test(text))
 }
 
+// Health Check Routes (For UptimeRobot & Render Keep-Alive)
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'active', message: 'Backend is running' })
+})
+
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'Backend is healthy', timestamp: new Date().toISOString() })
 })
@@ -206,7 +211,8 @@ app.post('/api/admin/login', authLimiter, async (req, res, next) => {
         email: admin.email,
       },
     })
-  } catch (error) {
+  } catch (error)
+ {
     if (error.name === 'ZodError') {
       return res.status(400).json({ success: false, error: error.errors[0]?.message || 'Invalid login data' })
     }
