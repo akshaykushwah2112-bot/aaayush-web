@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageHero } from '../components/PageHero'
+import { apiBaseUrl } from '../utils/config'
 
 export function AdminLogin() {
   const navigate = useNavigate()
@@ -35,7 +36,7 @@ export function AdminLogin() {
         throw new Error('Please enter both email and password')
       }
 
-      const response = await fetch('http://localhost:4000/api/admin/login', {
+      const response = await fetch(`${apiBaseUrl}/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.toLowerCase(), password }),

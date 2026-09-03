@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageHero } from '../components/PageHero'
+import { apiBaseUrl } from '../utils/config'
 
 export function AdminDashboard() {
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ export function AdminDashboard() {
   const fetchAppointments = async (token) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:4000/api/admin/appointments', {
+      const response = await fetch(`${apiBaseUrl}/admin/appointments`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -61,7 +62,7 @@ export function AdminDashboard() {
     const token = localStorage.getItem('adminToken')
 
     try {
-      const response = await fetch(`http://localhost:4000/api/admin/appointments/${id}/status`, {
+      const response = await fetch(`${apiBaseUrl}/admin/appointments/${id}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -15,6 +15,16 @@ const initialForm = {
   message: '',
 }
 
+const consultationTimeSlots = [
+  '11:00',
+  '12:30',
+  '14:00',
+  '15:30',
+  '17:00',
+  '18:30',
+  '19:00',
+]
+
 export default function Contact() {
   const [form, setForm] = useState(initialForm)
   const [loading, setLoading] = useState(false)
@@ -22,13 +32,27 @@ export default function Contact() {
 
   const handleChange = (event) => {
     const { name, value } = event.target
+
+    if (name === 'preferredDate' && new Date(`${value}T00:00:00`).getDay() === 0) {
+      setStatus({ type: 'error', message: 'Sundays are closed. Please choose another date.' })
+      return
+    }
+
     setForm((prev) => ({ ...prev, [name]: value }))
+    setStatus({ type: '', message: '' })
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     setLoading(true)
     setStatus({ type: '', message: '' })
+
+    const selectedDate = new Date(`${form.preferredDate}T00:00:00`)
+    if (selectedDate.getDay() === 0) {
+      setStatus({ type: 'error', message: 'Sundays are closed. Please choose another date.' })
+      setLoading(false)
+      return
+    }
 
     try {
       const response = await fetch(`${apiBaseUrl}/appointments`, {
@@ -145,6 +169,7 @@ export default function Contact() {
                       placeholder="Your name"
                       className="border border-charcoal/20 bg-transparent px-4 py-3 text-base outline-none transition focus:border-charcoal"
                       required
+                      onKeyDown={(event) => event.preventDefault()}
                     />
                   </label>
 
@@ -204,15 +229,19 @@ export default function Contact() {
                   </label>
 
                   <label className="flex flex-col gap-2 text-sm text-charcoal">
-                    <span>Preferred time</span>
-                    <input
+                    <span>Preferred time (11:00 AM - 7:00 PM)</span>
+                    <select
                       name="preferredTime"
-                      type="time"
+                      required
                       value={form.preferredTime}
                       onChange={handleChange}
                       className="border border-charcoal/20 bg-transparent px-4 py-3 text-base outline-none transition focus:border-charcoal"
-                      required
-                    />
+                    >
+                      <option value="">Select a slot</option>
+                      {consultationTimeSlots.map((slot) => (
+                        <option key={slot} value={slot}>{slot}</option>
+                      ))}
+                    </select>
                   </label>
                 </div>
 

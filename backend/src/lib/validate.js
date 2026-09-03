@@ -19,6 +19,18 @@ export const appointmentSchema = z.object({
   preferredTime: z.string().trim().min(3).max(20),
   projectType: z.enum(['ARCHITECTURE', 'INTERIOR', 'COMMERCIAL', 'RESIDENTIAL', 'RENOVATION', 'LANDSCAPE', 'OTHER']).optional().default('OTHER'),
   message: z.string().trim().max(2000).optional().or(z.literal('')),
+}).superRefine((value, context) => {
+  const preferredDate = new Date(`${value.preferredDate}T00:00:00Z`)
+  const [hours, minutes] = value.preferredTime.split(':').map(Number)
+  const timeInMinutes = hours * 60 + minutes
+
+  if (preferredDate.getUTCDay() === 0) {
+    context.addIssue({ code: z.ZodIssueCode.custom, path: ['preferredDate'], message: 'Appointments are unavailable on Sundays' })
+  }
+
+  if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(value.preferredTime) || timeInMinutes < 660 || timeInMinutes > 1140) {
+    context.addIssue({ code: z.ZodIssueCode.custom, path: ['preferredTime'], message: 'Appointments are available from 11:00 to 19:00' })
+  }
 })
 
 export const adminLoginSchema = z.object({

@@ -14,12 +14,13 @@ const initialForm = {
 }
 
 const defaultTimeSlots = [
-  '10:00',
-  '11:30',
-  '13:00',
-  '15:00',
-  '16:30',
-  '18:00',
+  '11:00',
+  '12:30',
+  '14:00',
+  '15:30',
+  '17:00',
+  '18:30',
+  '19:00',
 ]
 
 export default function AppointmentBooking() {
@@ -37,13 +38,26 @@ export default function AppointmentBooking() {
 
   const handleChange = (event) => {
     const { name, value } = event.target
+
+    if (name === 'preferredDate' && new Date(`${value}T00:00:00`).getDay() === 0) {
+      setError('Sundays are closed. Please choose another date.')
+      return
+    }
+
     setForm((prev) => ({ ...prev, [name]: value }))
+    setError('')
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     setLoading(true)
     setError('')
+
+    if (new Date(`${form.preferredDate}T00:00:00`).getDay() === 0) {
+      setError('Sundays are closed. Please choose another date.')
+      setLoading(false)
+      return
+    }
 
     const requestUrl = `${apiBaseUrl}/appointments`
     console.log('Confirm Appointment clicked')
@@ -230,6 +244,7 @@ export default function AppointmentBooking() {
                   type="date"
                   required
                   min={minDate}
+                  onKeyDown={(event) => event.preventDefault()}
                   value={form.preferredDate}
                   onChange={handleChange}
                   className="border border-charcoal/20 bg-transparent px-4 py-3 text-base outline-none transition focus:border-charcoal"
@@ -237,7 +252,7 @@ export default function AppointmentBooking() {
               </label>
 
               <label className="flex flex-col gap-2 text-sm text-charcoal">
-                <span>Preferred time</span>
+                <span>Preferred time (11:00 AM – 7:00 PM)</span>
                 <select
                   name="preferredTime"
                   required
