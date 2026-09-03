@@ -46,4 +46,4 @@ export const whatsappLink = (msg) =>
 export const callLink = () => `tel:${studio.contact.phoneRaw}`
 
 export const mailLink = () => `mailto:${studio.contact.email}`
-export const apiBaseUrl = 'https://aaayush-backend.onrender.com'
+export const apiBaseUrl = 'https://aaayush-backend.onrender.com/api'
